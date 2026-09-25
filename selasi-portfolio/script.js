@@ -87,20 +87,29 @@
     lastScrollY = currentY;
   }, { passive: true });
 
-  // ===== LIVE CLOCK (Accra, Ghana — GMT) =====
+  // ===== LIVE CLOCK (Accra, Ghana — GMT, no DST) =====
   const footerClockEl = document.getElementById('footerClock');
   const footerYearEl = document.getElementById('footerYear');
   const bbClockEl = document.getElementById('bbClock');
   const bbYearEl = document.getElementById('bbYear');
+  const accraTimeFormatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Africa/Accra',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+  const accraYearFormatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Africa/Accra',
+    year: 'numeric'
+  });
   function updateFooterClock() {
-    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Accra' }));
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-    const ss = String(now.getSeconds()).padStart(2, '0');
-    if (footerClockEl) footerClockEl.textContent = `${hh}:${mm}:${ss}`;
-    if (footerYearEl) footerYearEl.textContent = now.getFullYear();
-    if (bbClockEl) bbClockEl.textContent = `${hh}:${mm}:${ss}`;
-    if (bbYearEl) bbYearEl.textContent = now.getFullYear();
+    const timeStr = accraTimeFormatter.format(new Date()); // "HH:MM:SS" in Accra time
+    const yearStr = accraYearFormatter.format(new Date());
+    if (footerClockEl) footerClockEl.textContent = timeStr;
+    if (footerYearEl) footerYearEl.textContent = yearStr;
+    if (bbClockEl) bbClockEl.textContent = timeStr;
+    if (bbYearEl) bbYearEl.textContent = yearStr;
   }
   updateFooterClock();
   setInterval(updateFooterClock, 1000);

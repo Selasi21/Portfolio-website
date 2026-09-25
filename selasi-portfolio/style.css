@@ -1287,6 +1287,14 @@
       display: none;
     }
 
+    .bb-desktop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      width: 100%;
+    }
+
     /* ===== FOOTER ===== */
     footer {
       border-top: 1px solid var(--border);
