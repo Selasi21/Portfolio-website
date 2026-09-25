@@ -197,7 +197,8 @@
   function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
     const allPanels = document.querySelectorAll('.dock-panel');
-    const allDockItems = document.querySelectorAll('.dock-item[data-panel]');
+    // Includes both the floating dock buttons and the mobile bottom-bar buttons.
+    const allDockItems = document.querySelectorAll('.dock-item[data-panel], .bb-nav-item[data-panel]');
 
     // Close other panels
     allPanels.forEach(p => {
@@ -211,8 +212,9 @@
     if (!isOpen) {
       panel.classList.add('open');
       allDockItems.forEach(item => item.classList.remove('active'));
-      const correspondingBtn = document.querySelector(`.dock-item[data-panel="${panelId.replace('panel','').toLowerCase()}"]`);
-      if (correspondingBtn) correspondingBtn.classList.add('active');
+      const panelKey = panelId.replace('panel', '').toLowerCase();
+      document.querySelectorAll(`.dock-item[data-panel="${panelKey}"], .bb-nav-item[data-panel="${panelKey}"]`)
+        .forEach(btn => btn.classList.add('active'));
     } else {
       allDockItems.forEach(item => item.classList.remove('active'));
     }
@@ -222,6 +224,12 @@
   document.getElementById('dockWork').addEventListener('click', () => togglePanel('panelWork'));
   document.getElementById('dockAbout').addEventListener('click', () => togglePanel('panelAbout'));
   document.getElementById('dockContact').addEventListener('click', () => togglePanel('panelContact'));
+
+  // ===== MOBILE BOTTOM-BAR NAV EVENT LISTENERS =====
+  // Same panels as the dock, triggered from the mobile bottom bar instead.
+  document.getElementById('bbNavWork').addEventListener('click', () => togglePanel('panelWork'));
+  document.getElementById('bbNavAbout').addEventListener('click', () => togglePanel('panelAbout'));
+  document.getElementById('bbNavContact').addEventListener('click', () => togglePanel('panelContact'));
 
   // ===== CLOSE PANELS =====
   document.querySelectorAll('.panel-close').forEach(btn => {
@@ -290,9 +298,10 @@
   document.addEventListener('click', (e) => {
     const isDock = e.target.closest('.dock');
     const isPanel = e.target.closest('.dock-panel');
-    if (!isDock && !isPanel) {
+    const isBottomBar = e.target.closest('.bottom-bar');
+    if (!isDock && !isPanel && !isBottomBar) {
       document.querySelectorAll('.dock-panel').forEach(p => p.classList.remove('open'));
-      document.querySelectorAll('.dock-item[data-panel]').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.dock-item[data-panel], .bb-nav-item[data-panel]').forEach(i => i.classList.remove('active'));
     }
   });
 

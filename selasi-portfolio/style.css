@@ -1282,6 +1282,11 @@
       background: var(--border);
     }
 
+    /* Mobile nav row inside the bottom bar — hidden by default, shown only on mobile */
+    .bb-mobile-nav {
+      display: none;
+    }
+
     /* ===== FOOTER ===== */
     footer {
       border-top: 1px solid var(--border);
@@ -1450,6 +1455,11 @@
         padding: 0 16px;
       }
 
+      .chat-window {
+        min-height: 0;
+        justify-content: flex-start;
+      }
+
       .chat-nav {
         gap: 10px;
         font-size: 0.78rem;
@@ -1540,7 +1550,50 @@
         display: none;
       }
 
+      .bb-desktop {
+        display: none;
+      }
+
+      .bb-mobile-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        gap: 4px;
+      }
+
+      .bb-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        border: none;
+        background: transparent;
+        font-family: var(--font-sans);
+        font-size: 0.68rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        cursor: pointer;
+        letter-spacing: 0.01em;
+        padding: 4px 8px;
+      }
+
+      .bb-nav-item svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        stroke-width: 1.6;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .bb-nav-item.active {
+        color: var(--accent);
+      }
+
       .dock {
+        display: none;
         bottom: 60px;
         gap: 2px;
         padding: 4px 6px;
